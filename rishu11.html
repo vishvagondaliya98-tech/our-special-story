@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Special Story ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+        body { background: linear-gradient(135deg, #ffe6eb 0%, #ffd1dc 50%, #fecfef 100%); font-family: 'Poppins', sans-serif; color: #4a4a4a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .card { background: rgba(255, 255, 255, 0.95); width: 100%; max-width: 450px; padding: 30px 25px; border-radius: 25px; box-shadow: 0 15px 35px rgba(226, 38, 77, 0.2); text-align: center; border: 2px solid #fff; animation: fadeIn 1.2s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .heading { font-family: 'Dancing Script', cursive; font-size: 2.3rem; color: #d63384; margin-bottom: 5px; font-weight: 700; }
+        .heart-icon { font-size: 2rem; margin: 5px 0 15px 0; animation: pulse 1.5s infinite; display: inline-block; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
+        .calendar-box { background: #ffffff; border-radius: 20px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); margin-bottom: 25px; border: 1px solid #ffe1e8; }
+        .month-header { font-weight: 600; font-size: 1.2rem; color: #c2255c; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; font-size: 0.9rem; }
+        .day-name { font-weight: 600; color: #999; font-size: 0.8rem; padding-bottom: 5px; }
+        .day-num { padding: 8px 0; border-radius: 50%; color: #555; font-weight: 400; transition: all 0.3s; }
+        .day-num.highlight { background: linear-gradient(135deg, #ff4b72, #d63384); color: #ffffff; font-weight: 700; box-shadow: 0 4px 12px rgba(214, 51, 132, 0.4); animation: highlightPulse 2s infinite alternate; }
+        @keyframes highlightPulse { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        .empty-day { visibility: hidden; }
+        .romantic-line { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #722ed1; margin-bottom: 20px; line-height: 1.4; padding: 0 10px; }
+        .begin-btn { background: linear-gradient(135deg, #ff4b72 0%, #d63384 100%); color: white; border: none; padding: 14px 32px; font-size: 1.05rem; font-weight: 600; border-radius: 30px; cursor: pointer; box-shadow: 0 8px 20px rgba(214, 51, 132, 0.35); transition: all 0.3s ease; outline: none; }
+        .begin-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(214, 51, 132, 0.5); }
+        .story-container { display: none; margin-top: 25px; padding-top: 20px; border-top: 2px dashed #ffd1dc; }
+        .story-container.active-story { display: block !important; animation: openPhoto 0.8s ease-in-out forwards; }
+        @keyframes openPhoto { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .story-image { width: 100%; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 4px solid #fff; }
+        .cards-section { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #ffd1dc; }
+        .cards-title { font-family: 'Dancing Script', cursive; font-size: 2rem; color: #d63384; margin-bottom: 20px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .flip-card { background-color: transparent; height: 160px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 18px; padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 8px 20px rgba(214, 51, 132, 0.12); border: 2px solid #fff; }
+        .flip-card-front { background: linear-gradient(135deg, #ffffff 0%, #fff0f5 100%); color: #d63384; }
+        .card-icon { font-size: 1.8rem; margin-bottom: 4px; }
+        .flip-card-front h3 { font-size: 0.95rem; font-weight: 600; }
+        .flip-card-front p { font-size: 0.7rem; color: #aaa; margin-top: 2px; }
+        .flip-card-back { background: linear-gradient(135deg, #ff4b72 0%, #d63384 100%); color: white; transform: rotateY(180deg); }
+        .flip-card-back p { font-family: 'Dancing Script', cursive; font-size: 1.15rem; line-height: 1.3; }
+        .gallery-section { margin-top: 35px; padding-top: 20px; border-top: 2px dashed #ffd1dc; }
+        .polaroid-frame { background: #ffffff; padding: 15px 15px 25px 15px; border-radius: 12px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12); border: 1px solid #f0f0f0; transform: rotate(-1.5deg); transition: all 0.4s ease; position: relative; }
+        .polaroid-frame:hover { transform: rotate(0deg) scale(1.02); }
+        .carousel-container { position: relative; overflow: hidden; border-radius: 8px; height: 280px; }
+        .carousel-slide { display: none; width: 100%; height: 100%; }
+        .carousel-slide.active { display: block; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+        .polaroid-caption { font-family: 'Dancing Script', cursive; font-size: 1.4rem; color: #d63384; margin-top: 15px; font-weight: 700; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.85); color: #d63384; border: none; font-size: 1.2rem; font-weight: bold; padding: 10px 14px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.3s ease; z-index: 10; }
+        .carousel-btn:hover { background: #d63384; color: white; }
+        .prev-btn { left: 8px; }
+        .next-btn { right: 8px; }
+        .dots-container { margin-top: 15px; display: flex; justify-content: center; gap: 8px; }
+        .dot { height: 10px; width: 10px; background-color: #ffd1dc; border-radius: 50%; display: inline-block; cursor: pointer; transition: all 0.3s; }
+        .dot.active-dot { background-color: #d63384; width: 22px; border-radius: 10px; }
+        .timer-section { margin-top: 35px; padding: 20px 15px; background: #fff; border-radius: 20px; box-shadow: 0 8px 25px rgba(214, 51, 132, 0.12); border: 1px solid #ffe1e8; }
+        .timer-title { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: #d63384; margin-bottom: 15px; font-weight: 700; }
+        .timer-grid { display: flex; justify-content: space-around; align-items: center; }
+        .timer-unit { text-align: center; }
+        .timer-num { font-size: 1.5rem; font-weight: 700; color: #ff4b72; background: #fff0f5; padding: 8px 12px; border-radius: 12px; min-width: 55px; display: inline-block; border: 1px solid #ffd1dc; }
+        .timer-label { font-size: 0.75rem; color: #888; margin-top: 5px; font-weight: 600; text-transform: uppercase; }
+        .forever-section { margin-top: 35px; padding: 20px; background: linear-gradient(135deg, #fff0f5, #ffe6eb); border-radius: 20px; border: 2px dashed #ffb6c1; position: relative; }
+        .forever-img { width: 100%; max-width: 280px; border-radius: 15px; margin: 15px 0; box-shadow: 0 8px 20px rgba(214, 51, 132, 0.15); }
+        .letter-card { background: #ffffff; border-radius: 15px; padding: 15px; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #ffd1dc; transition: all 0.3s ease; }
+        .letter-card:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(214, 51, 132, 0.2); }
+        .grand-ending { margin-top: 35px; padding: 25px 15px; background: linear-gradient(135deg, #fff0f5 0%, #ffe6eb 100%); border-radius: 20px; border: 2px dashed #ffb6c1; position: relative; }
+        .grand-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #d63384; margin-bottom: 10px; }
+        .grand-text { font-size: 0.95rem; color: #666; line-height: 1.5; margin-bottom: 20px; }
+        .celebrate-btn { background: linear-gradient(135deg, #ff4b72, #d63384); color: white; border: none; padding: 12px 28px; font-size: 1rem; font-weight: 600; border-radius: 25px; cursor: pointer; box-shadow: 0 6px 18px rgba(214, 51, 132, 0.3); transition: all 0.3s ease; }
+        .celebrate-btn:hover { transform: scale(1.05); box-shadow: 0 8px 22px rgba(214, 51, 132, 0.45); }
+        .floating-heart { position: fixed; font-size: 24px; user-select: none; pointer-events: none; animation: floatUp 3s linear forwards; z-index: 9999; }
+        @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; z-index: 10000; }
+        .modal-box { background: white; padding: 25px; border-radius: 20px; text-align: center; max-width: 320px; width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: popIn 0.3s ease-in-out; border: 2px solid #ffd1dc; }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-title { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: #d63384; margin-bottom: 10px; }
+        .modal-text { font-size: 0.95rem; color: #555; line-height: 1.4; margin-bottom: 20px; }
+        .modal-close-btn { background: #d63384; color: white; border: none; padding: 8px 22px; border-radius: 20px; cursor: pointer; font-weight: 600; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1 class="heading">Our Special Day Date</h1>
+    <div class="heart-icon">❤️</div>
+    <div class="calendar-box">
+        <div class="month-header">July</div>
+        <div class="calendar-grid">
+            <div class="day-name">S</div><div class="day-name">M</div><div class="day-name">T</div><div class="day-name">W</div><div class="day-name">T</div><div class="day-name">F</div><div class="day-name">S</div>
+            <div class="empty-day"></div><div class="empty-day"></div><div class="empty-day"></div>
+            <div class="day-num">1</div><div class="day-num">2</div><div class="day-num">3</div><div class="day-num">4</div><div class="day-num">5</div><div class="day-num">6</div><div class="day-num">7</div><div class="day-num">8</div><div class="day-num">9</div><div class="day-num">10</div><div class="day-num">11</div><div class="day-num">12</div><div class="day-num">13</div><div class="day-num">14</div><div class="day-num">15</div><div class="day-num">16</div><div class="day-num">17</div><div class="day-num">18</div><div class="day-num">19</div><div class="day-num">20</div><div class="day-num">21</div><div class="day-num">22</div><div class="day-num">23</div><div class="day-num">24</div>
+            <div class="day-num highlight">25</div>
+            <div class="day-num">26</div><div class="day-num">27</div><div class="day-num">28</div><div class="day-num">29</div><div class="day-num">30</div><div class="day-num">31</div>
+        </div>
+    </div>
+    <p class="romantic-line">"Falling for you was the best decision I ever made." ❤️</p>
+    <button class="begin-btn" id="startBtn" onclick="openStorySection()">Begin Our Story ✨</button>
+    <div class="story-container" id="storyBox">
+        <img src="story.jpg.jpeg" alt="Our Story" class="story-image">
+        <div class="cards-section">
+            <h2 class="cards-title">Reasons Why I Love You 💕</h2>
+            <div class="cards-grid">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front"><span class="card-icon">✨</span><h3>Reason #1</h3><p>Tap to flip!</p></div><div class="flip-card-back"><p>"Your smile can instantly brighten up even my darkest days." 💖</p></div></div></div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front"><span class="card-icon">🌸</span><h3>Reason #2</h3><p>Tap to flip!</p></div><div class="flip-card-back"><p>"The way you care for me makes me feel so special." 🌷</p></div></div></div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front"><span class="card-icon">🧸</span><h3>Reason #3</h3><p>Tap to flip!</p></div><div class="flip-card-back"><p>"Every moment with you becomes a precious memory." 💌</p></div></div></div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front"><span class="card-icon">👑</span><h3>Reason #4</h3><p>Tap to flip!</p></div><div class="flip-card-back"><p>"You are my best friend and my safe place." Infinity ❤️</p></div></div></div>
+            </div>
+        </div>
+        <div class="gallery-section">
+            <h2 class="cards-title">Our Sweet Memories 📸</h2>
+            <div class="polaroid-frame">
+                <button class="carousel-btn prev-btn" onclick="moveSlide(-1)">❮</button>
+                <button class="carousel-btn next-btn" onclick="moveSlide(1)">❯</button>
+                <div class="carousel-container">
+                    <div class="carousel-slide active"><img src="photo1.jpeg" alt="Memory 1"></div>
+                    <div class="carousel-slide"><img src="photo2.jpeg" alt="Memory 2"></div>
+                    <div class="carousel-slide"><img src="photo3.jpeg" alt="Memory 3"></div>
+                    <div class="carousel-slide"><img src="photo4.jpeg" alt="Memory 4"></div>
+                </div>
+                <div class="polaroid-caption" id="captionText">Forever & Always ❤️</div>
+            </div>
+            <div class="dots-container">
+                <span class="dot active-dot" onclick="currentSlide(0)"></span>
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        </div>
+        <div class="timer-section">
+            <h2 class="timer-title">Time We've Been Together ⏳❤️</h2>
+            <div class="timer-grid">
+                <div class="timer-unit"><span class="timer-num" id="days">0</span><div class="timer-label">Days</div></div>
+                <div class="timer-unit"><span class="timer-num" id="hours">0</span><div class="timer-label">Hours</div></div>
+                <div class="timer-unit"><span class="timer-num" id="minutes">0</span><div class="timer-label">Mins</div></div>
+                <div class="timer-unit"><span class="timer-num" id="seconds">0</span><div class="timer-label">Secs</div></div>
+            </div>
+        </div>
+        <div class="forever-section">
+            <h2 class="cards-title">Growing Old With You 👴👵</h2>
+            <p style="font-size: 0.9rem; color: #666;">I want to hold your hand when we're 80 and say, "We made it." ❤️</p>
+            <img src="photo5.jpeg" class="forever-img" alt="Love Forever">
+            <div class="letter-card" onclick="openSecretNote()">
+                <p style="font-weight: 600; color: #d63384;">✉️ Tap to open my secret note for you!</p>
+            </div>
+        </div>
+        <div class="grand-ending">
+            <h2 class="grand-title">To Infinity & Beyond 💖</h2>
+            <p class="grand-text">Thank you for making my world so beautiful. Here's to forever with you! ✨</p>
+            <button class="celebrate-btn" onclick="createHeartsAnimation()">Send Lots of Love 💕</button>
+        </div>
+    </div>
+</div>
+<div class="modal-overlay" id="noteModal">
+    <div class="modal-box">
+        <div class="modal-title">💌 Secret Message</div>
+        <p class="modal-text">No matter how old we get, my love for you will stay as young as the day we met. Forever yours! ❤️</p>
+        <button class="modal-close-btn" onclick="closeSecretNote()">Close 💕</button>
+    </div>
+</div>
+<script>
+    function openStorySection() {
+        var box = document.getElementById('storyBox');
+        box.classList.add('active-story');
+        box.scrollIntoView({ behavior: 'smooth' });
+    }
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+    const captions = ["Forever & Always ❤️", "My Favorite Moment 🌸", "Together is my Favorite Place ✨", "You & Me Infinite Love 💖"];
+    function showSlide(index) {
+        if (index >= slides.length) currentSlideIndex = 0;
+        else if (index < 0) currentSlideIndex = slides.length - 1;
+        else currentSlideIndex = index;
+        slides.forEach(function(slide) { slide.classList.remove('active'); });
+        dots.forEach(function(dot) { dot.classList.remove('active-dot'); });
+        slides[currentSlideIndex].classList.add('active');
+        dots[currentSlideIndex].classList.add('active-dot');
+        document.getElementById('captionText').innerText = captions[currentSlideIndex];
+    }
+    function moveSlide(step) { showSlide(currentSlideIndex + step); }
+    function currentSlide(index) { showSlide(index); }
+    function createHeartsAnimation() {
+        const hearts = ['❤️', '💖', '💕', '🌸', '✨', '💗'];
+        for (let i = 0; i < 30; i++) {
+            setTimeout(function() {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = (window.innerHeight - 50) + 'px';
+                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(heart);
+                setTimeout(function() { heart.remove(); }, 3000);
+            }, i * 100);
+        }
+    }
+    function openSecretNote() { document.getElementById('noteModal').style.display = 'flex'; }
+    function closeSecretNote() { document.getElementById('noteModal').style.display = 'none'; }
+    const startDate = new Date("July 25, 2024 10:00:00").getTime();
+    function updateLoveCounter() {
+        const now = new Date().getTime();
+        const difference = now - startDate;
+        if (difference > 0) {
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+        }
+    }
+    setInterval(updateLoveCounter, 1000);
+    updateLoveCounter();
+</script>
+</body>
+</html>
